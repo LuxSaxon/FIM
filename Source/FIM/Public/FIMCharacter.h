@@ -11,6 +11,7 @@
 #include "Components/TimelineComponent.h"
 #include "FIMCharacter.generated.h"
 
+
 class USAttributeSet;
 class USActionComponent;
 class UCurveFloat;
@@ -91,6 +92,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 		float RotationSpeed;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Melee")
+		bool IsInvincible;
+
 protected:
 
 	/** Called for forwards/backward input */
@@ -129,6 +133,10 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ServerMode")
 		void Server_Equip(FName SkeletalName_L, FName SkeletalName_R);
+
+/*
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ServerMode")
+		void Server_Equip();*/
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ServerMode")
 		void Server_Attack();
@@ -214,7 +222,7 @@ protected:
 	UCapsuleComponent* CapsuleComp;
 
 	UPROPERTY(BlueprintReadOnly, Category = "CharacterMovement")
-		UCharacterMovementComponent* CM;
+		UCharacterMovementComponent* CMComp;
 
 	/*Set up Dashing*/
 	UFUNCTION(BlueprintCallable, Category = "Dashing")
@@ -253,7 +261,11 @@ protected:
 
 	/*setup block event*/
 	void BlockingStart();
+
 	void BlockingEnd();
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Melee")
+		void OnInvicinble();
 
 	/*Team ID*/
 	UPROPERTY(BlueprintReadOnly, Category = "Hit")
