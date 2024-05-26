@@ -27,7 +27,7 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "Components/PrimitiveComponent.h"
 #include "Animation/AnimNotifies/AnimNotify.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
+//#include "HeadMountedDisplayFunctionLibrary.h"
 #include "FIM/FIM.h"
 #include "SActionComponent.h"
 #include "AIController.h"
@@ -67,12 +67,12 @@ AFIMCharacter::AFIMCharacter()
 	bUseControllerRotationRoll = false;
 
 	// Configure character movement
-	CM = GetCharacterMovement();
-	CM->bOrientRotationToMovement = true; // Character moves in the direction of input...	
-	CM->bAllowPhysicsRotationDuringAnimRootMotion = false;
-	CM->RotationRate = FRotator(0.0f, 500.0f, 0.0f); // ...at this rotation rate
-	CM->JumpZVelocity = 600.0f;
-	CM->AirControl = 0.2f;
+	CMComp = GetCharacterMovement();
+	CMComp->bOrientRotationToMovement = true; // Character moves in the direction of input...	
+	CMComp->bAllowPhysicsRotationDuringAnimRootMotion = false;
+	CMComp->RotationRate = FRotator(0.0f, 500.0f, 0.0f); // ...at this rotation rate
+	CMComp->JumpZVelocity = 600.0f;
+	CMComp->AirControl = 0.2f;
 
 
 	// Configure character movement
@@ -184,9 +184,6 @@ void AFIMCharacter::Tick(float DeltaTime)
 	ConculateLastInput();
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Input
-
 void AFIMCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
@@ -253,6 +250,12 @@ void AFIMCharacter::Server_Equip_Implementation(FName SkeletalName_L, FName Skel
 	WeaponComp_L->AttachToComponent(CharacterMeshComp, FAttachmentTransformRules::SnapToTargetIncludingScale, SkeletalName_L);
 	WeaponComp_R->AttachToComponent(CharacterMeshComp, FAttachmentTransformRules::SnapToTargetIncludingScale, SkeletalName_R);
 }
+
+
+/*
+void AFIMCharacter::Server_Equip_Implementation()
+{
+}*/
 
 void AFIMCharacter::Server_Attack_Implementation()
 {
@@ -412,22 +415,22 @@ void AFIMCharacter::Dashing()
 			switch (InputValue())
 			{
 			case 1:
-				DashingMovement(CM);
+				DashingMovement(CMComp);
 				PlayAnimMontage(Montage_RDodge, PlayMontageRate, NAME_None);
 				break;
 
 			case 2:
-				DashingMovement(CM);
+				DashingMovement(CMComp);
 				PlayAnimMontage(Montage_LDodge, PlayMontageRate, NAME_None);
 				break;
 
 			case 3:
-				DashingMovement(CM);
+				DashingMovement(CMComp);
 				PlayAnimMontage(Montage_FDodge, PlayMontageRate, NAME_None);
 				break;
 
 			case 4:
-				DashingMovement(CM);
+				DashingMovement(CMComp);
 				PlayAnimMontage(Montage_BDodge, PlayMontageRate, NAME_None);
 				break;
 			}
@@ -482,7 +485,7 @@ void AFIMCharacter::DashingEnd()
 
 void AFIMCharacter::ConculateLastInput()
 {
-	LastInput = CM->GetLastInputVector();
+	LastInput = CMComp->GetLastInputVector();
 	FRotator CameraRotation = CameraComp->GetComponentRotation();
 
 	if (!LastInput.IsZero() || IsAttacking)
@@ -515,6 +518,7 @@ void AFIMCharacter::BlockingStart()
 	{
 		bIsBlock = true;
 		GetCharacterMovement()->StopMovementImmediately();
+		OnInvicinble();
 	}
 	else
 	{
@@ -525,6 +529,11 @@ void AFIMCharacter::BlockingStart()
 void AFIMCharacter::BlockingEnd()
 {
 	bIsBlock = false;
+}
+
+void AFIMCharacter::OnInvicinble_Implementation()
+{
+
 }
 
 void AFIMCharacter::AutoDeterminTeamIDbyControllerType()
