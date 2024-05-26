@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+/*
 #include "TimeReverseCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/PoseableMeshComponent.h"
@@ -64,7 +64,7 @@ void ATimeReverseCharacter::AssignMesh()
 
 	//Assign combat mode bool
 // 	IsActorCombatmode = BP_Charac;
-}*/
+}
 
 void ATimeReverseCharacter::GhostCharacter_Implementation()
 {
@@ -98,5 +98,5 @@ void ATimeReverseCharacter::GhostCharacter_Implementation()
 			Array_BodyMaterial[i + BodyMesh->GetMaterials().Num() + L_Weapon->GetMaterials().Num()]->Create(R_Weapon->GetMaterial(i), R_Weapon);
 		}
 	}*/
-}
+//}
 

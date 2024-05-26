@@ -149,7 +149,7 @@ public:
 
 	FTimerHandle TH_EndAttack;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Normal_Attack")
+	UPROPERTY(BlueprintReadWrite, Category = "Normal_Attack")	
 		int32 Attack_Num;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Normal_Attack")
