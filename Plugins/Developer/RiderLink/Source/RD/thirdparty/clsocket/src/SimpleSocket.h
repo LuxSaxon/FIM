@@ -276,7 +276,7 @@ public:
     bool SetNonblocking(void);
 
     /// Get a pointer to internal receive buffer.  The user MUST not free this
-    /// pointer when finished.  This memory is managed internally by the CSocket
+    /// pointer when finished.  This memory is n_BASIC_MPged internally by the CSocket
     /// class.
     /// @return pointer to data if valid, else returns NULL.
     uint8_t *GetData(void)  {

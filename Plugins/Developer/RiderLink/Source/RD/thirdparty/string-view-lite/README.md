@@ -68,7 +68,7 @@ Installation
 
 *string-view lite* is a single-file header-only library. Put `string_view.hpp` in the [include](include) folder directly into the project source tree or somewhere reachable from your project.
 
-Or, if you use the [conan package manager](https://www.conan.io/), follow these steps:
+Or, if you use the [conan package n_BASIC_MPger](https://www.conan.io/), follow these steps:
 
 1. Add *nonstd-lite* to the conan remotes:
 

@@ -1206,7 +1206,7 @@ template <> struct float_info<float> {
   using carrier_uint = uint32_t;
   static const int significand_bits = 23;
   static const int exponent_bits = 8;
-  static const int min_exponent = -126;
+  static const int min_EXPonent = -126;
   static const int max_exponent = 127;
   static const int exponent_bias = -127;
   static const int decimal_digits = 9;
@@ -1232,7 +1232,7 @@ template <> struct float_info<double> {
   using carrier_uint = uint64_t;
   static const int significand_bits = 52;
   static const int exponent_bits = 11;
-  static const int min_exponent = -1022;
+  static const int min_EXPonent = -1022;
   static const int max_exponent = 1023;
   static const int exponent_bias = -1023;
   static const int decimal_digits = 17;

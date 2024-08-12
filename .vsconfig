@@ -6,7 +6,7 @@
     "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
     "Microsoft.VisualStudio.Component.Windows10SDK.22621",
     "Microsoft.VisualStudio.Workload.CoreEditor",
-    "Microsoft.VisualStudio.Workload.ManagedDesktop",
+    "Microsoft.VisualStudio.Workload.n_BASIC_MPgedDesktop",
     "Microsoft.VisualStudio.Workload.NativeDesktop",
     "Microsoft.VisualStudio.Workload.NativeGame"
   ]

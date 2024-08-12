@@ -351,7 +351,7 @@ struct is_nothrow_swappable
 };
 #endif
 
-// The storage base manages the actual storage, and correctly propagates
+// The storage base n_BASIC_MPges the actual storage, and correctly propagates
 // trivial destruction from T. This case is for when T is not trivially
 // destructible.
 template <class T, bool = ::std::is_trivially_destructible<T>::value>
@@ -439,7 +439,7 @@ template <class T> struct optional_operations_base : optional_storage_base<T> {
 #endif
 };
 
-// This class manages conditionally having a trivial copy constructor
+// This class n_BASIC_MPges conditionally having a trivial copy constructor
 // This specialization is for when T is trivially copy constructible
 template <class T, bool = TL_OPTIONAL_IS_TRIVIALLY_COPY_CONSTRUCTIBLE(T)>
 struct optional_copy_base : optional_operations_base<T> {
@@ -465,7 +465,7 @@ struct optional_copy_base<T, false> : optional_operations_base<T> {
   optional_copy_base &operator=(optional_copy_base &&rhs) = default;
 };
 
-// This class manages conditionally having a trivial move constructor
+// This class n_BASIC_MPges conditionally having a trivial move constructor
 // Unfortunately there's no way to achieve this in GCC < 5 AFAIK, since it
 // doesn't implement an analogue to std::is_trivially_move_constructible. We
 // have to make do with a non-trivial move constructor even if T is trivially
@@ -496,7 +496,7 @@ template <class T> struct optional_move_base<T, false> : optional_copy_base<T> {
   optional_move_base &operator=(optional_move_base &&rhs) = default;
 };
 
-// This class manages conditionally having a trivial copy assignment operator
+// This class n_BASIC_MPges conditionally having a trivial copy assignment operator
 template <class T, bool = TL_OPTIONAL_IS_TRIVIALLY_COPY_ASSIGNABLE(T) &&
                           TL_OPTIONAL_IS_TRIVIALLY_COPY_CONSTRUCTIBLE(T) &&
                           TL_OPTIONAL_IS_TRIVIALLY_DESTRUCTIBLE(T)>
@@ -520,7 +520,7 @@ struct optional_copy_assign_base<T, false> : optional_move_base<T> {
   operator=(optional_copy_assign_base &&rhs) = default;
 };
 
-// This class manages conditionally having a trivial move assignment operator
+// This class n_BASIC_MPges conditionally having a trivial move assignment operator
 // Unfortunately there's no way to achieve this in GCC < 5 AFAIK, since it
 // doesn't implement an analogue to std::is_trivially_move_assignable. We have
 // to make do with a non-trivial move assignment operator even if T is trivially
@@ -678,7 +678,7 @@ public:
 };
 
 /// An optional object is an object that contains the storage for another
-/// object and manages the lifetime of this contained object, if any. The
+/// object and n_BASIC_MPges the lifetime of this contained object, if any. The
 /// contained object may be initialized after the optional object has been
 /// initialized, and may be destroyed before the optional object has been
 /// destroyed. The initialization state of the contained object is tracked by

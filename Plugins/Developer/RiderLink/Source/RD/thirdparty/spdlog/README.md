@@ -21,7 +21,7 @@ $ cmake .. && make -j
  * macOS (clang 3.5+)
  * Android
 
-## Package managers:
+## Package n_BASIC_MPgers:
 * Debian: `sudo apt install libspdlog-dev`
 * Homebrew: `brew install spdlog`
 * MacPorts: `sudo port install spdlog`

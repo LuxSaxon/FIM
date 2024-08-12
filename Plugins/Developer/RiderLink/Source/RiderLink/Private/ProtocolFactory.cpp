@@ -8,7 +8,7 @@
 #if ENGINE_MAJOR_VERSION >= 5
 #include "HAL/PlatformFileManager.h"
 #else
-#include "HAL/PlatformFilemanager.h"
+#include "HAL/PlatformFileManager.h"
 #endif
 #include "Misc/App.h"
 #include "Misc/FileHelper.h"

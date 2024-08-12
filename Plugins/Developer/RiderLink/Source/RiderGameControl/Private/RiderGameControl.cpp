@@ -213,10 +213,10 @@ FRiderGameControlActionsCache::~FRiderGameControlActionsCache()
 
 void FRiderGameControlActionsCache::UpdatePlayWorldCommandsCache()
 {
-    FInputBindingManager& BindingManager = FInputBindingManager::Get();
+    FInputBindingManager& Bindingn_BASIC_MPger = FInputBindingManager::Get();
     auto CacheCommand = [&] (FCachedCommandInfo &Cmd, const FName &ContextName)
     {
-        Cmd.Command = BindingManager.FindCommandInContext(ContextName, Cmd.CommandName);
+        Cmd.Command = Bindingn_BASIC_MPger.FindCommandInContext(ContextName, Cmd.CommandName);
     };
 
     const FName PlayWorldContextName = FName("PlayWorld");

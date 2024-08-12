@@ -45,16 +45,16 @@ AFIMCharacter::AFIMCharacter()
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
 	//get skeletal mesh & set up weapon for it.
-// 	CharacterMeshComp = GetMesh();
+	// 	CharacterMeshComp = GetMesh();
 	CharacterMeshComp = GetMesh();
 	CharacterMeshComp->SetSimulatePhysics(true);
 	CharacterMeshComp->SetAllBodiesSimulatePhysics(true);
-	
+
 	WeaponComp_R = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon_R"));
-   	WeaponComp_R->SetupAttachment(CharacterMeshComp);
+	WeaponComp_R->SetupAttachment(CharacterMeshComp);
 
 	WeaponComp_L = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon_L"));
-  	WeaponComp_L->SetupAttachment(CharacterMeshComp);
+	WeaponComp_L->SetupAttachment(CharacterMeshComp);
 
 	// set our turn rate for input
 	TurnRateGamepad = 50.f;
@@ -102,7 +102,8 @@ AFIMCharacter::AFIMCharacter()
 
 	// Create a follow camera
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	CameraComp->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
+	CameraComp->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
+	// Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	CameraComp->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	WalkingSpeed = 200;
@@ -151,11 +152,47 @@ void AFIMCharacter::BeginPlay()
 	{
 		AttributeSettings = AbilitySystemComp->GetSet<USAttributeSet>();
 
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->GetHealthAttribute()).AddUObject(this, &AFIMCharacter::OnHealthChangedNative);
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->GetManaAttribute()).AddUObject(this, &AFIMCharacter::OnManaChangedNative);
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->GetStaminaAttribute()).AddUObject(this, &AFIMCharacter::OnStaminaChangedNative);
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->GetAttackPowerAttribute()).AddUObject(this, &AFIMCharacter::OnAttackPowerChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->Getn_BASIC_HPAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_BASIC_HPChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->Getn_BASIC_MPAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_BASIC_MPChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->Getn_BASIC_SPAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_BASIC_SPChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->Getn_BAISC_DPAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_BAISC_DPChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->Getn_LVAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_LVChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->Getn_EXPAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_EXPChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->Getn_BAISC_DATKAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_BAISC_DATKChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->Getn_BAISC_DDEFAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_BAISC_DDEFChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(AttributeSettings->Getn_BAISC_MOVE_SPEEDAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_BAISC_MOVE_SPEEDChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(
+			                   AttributeSettings->Getn_BAISC_ATTACK_SPEEDAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_BAISC_ATTACK_SPEEDChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(
+			                   AttributeSettings->Getn_CRIAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_CRIChangedNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(
+			                   AttributeSettings->Getn_CRI_PROPORTIONAttribute()).
+		                   AddUObject(
+			                   this, &AFIMCharacter::Onn_CRI_PROPORTIONChangedNative);
 		AbilityLevelSetup = 1;
+		CurrentMaximonn_BASIC_HP = AttributeSettings->GetMaxn_BASIC_HP();
 	}
 
 	AutoDeterminTeamIDbyControllerType();
@@ -197,6 +234,8 @@ void AFIMCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AFIMCharacter::Dashing);
 
 	PlayerInputComponent->BindAction("NormlaAttack", IE_Pressed, this, &AFIMCharacter::Server_Attack);
+	PlayerInputComponent->BindAction("Devour", IE_Pressed, this, &AFIMCharacter::Devour);
+	PlayerInputComponent->BindAction("PossessMonster", IE_Pressed, this, &AFIMCharacter::PossessedEvent);
 
 	PlayerInputComponent->BindAction("Blocking", IE_Pressed, this, &AFIMCharacter::BlockingStart);
 	PlayerInputComponent->BindAction("Blocking", IE_Released, this, &AFIMCharacter::BlockingEnd);
@@ -221,7 +260,9 @@ void AFIMCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 
 	if (AbilitySystemComp && InputComponent)
 	{
-		const FGameplayAbilityInputBinds Binds("Confirm", "Cancel", "EGASAbilityInputID", static_cast<int32>(EGASAbilityInputID::Confirm), static_cast<int32>(EGASAbilityInputID::Cancel));
+		const FGameplayAbilityInputBinds Binds("Confirm", "Cancel", "EGASAbilityInputID",
+		                                       static_cast<int32>(EGASAbilityInputID::Confirm),
+		                                       static_cast<int32>(EGASAbilityInputID::Cancel));
 		AbilitySystemComp->BindAbilityActivationToInputComponent(InputComponent, Binds);
 	}
 }
@@ -242,13 +283,14 @@ void AFIMCharacter::Server_CombatMode_Implementation()
 
 void AFIMCharacter::CombatModeEvent_Implementation(bool OnCombatStart)
 {
-
 }
 
 void AFIMCharacter::Server_Equip_Implementation(FName SkeletalName_L, FName SkeletalName_R)
 {
-	WeaponComp_L->AttachToComponent(CharacterMeshComp, FAttachmentTransformRules::SnapToTargetIncludingScale, SkeletalName_L);
-	WeaponComp_R->AttachToComponent(CharacterMeshComp, FAttachmentTransformRules::SnapToTargetIncludingScale, SkeletalName_R);
+	WeaponComp_L->AttachToComponent(CharacterMeshComp, FAttachmentTransformRules::SnapToTargetIncludingScale,
+	                                SkeletalName_L);
+	WeaponComp_R->AttachToComponent(CharacterMeshComp, FAttachmentTransformRules::SnapToTargetIncludingScale,
+	                                SkeletalName_R);
 }
 
 
@@ -267,51 +309,31 @@ void AFIMCharacter::Server_Attack_Implementation()
 	}
 }
 
-void AFIMCharacter::NormalAttack(UAnimMontage* NormalAttack_1, UAnimMontage* NormalAttack_2, UAnimMontage* NormalAttack_3, UAnimMontage* NormalAttack_4)
+void AFIMCharacter::NormalAttack(const TArray<UAnimMontage*>& NormalAttacks)
 {
-	if (bIsHitted == false)
-	{
-		switch (Attack_Num)
-		{
-		case 0:
-			PlayAnimMontage(NormalAttack_1, 1);
-			AM_Attack = NormalAttack_1;
-			Attack_Num++;
-			IsAttacking = true;
-			break;
+    if (bIsHitted == false && NormalAttacks.Num() > 0)
+    {
+        if (Attack_Num < NormalAttacks.Num())
+        {
+            PlayAnimMontage(NormalAttacks[Attack_Num], 1);
+            AM_Attack = NormalAttacks[Attack_Num];
+            Attack_Num++;
+            IsAttacking = true;
 
-		case 1:
-			PlayAnimMontage(NormalAttack_2, 1);
-			AM_Attack = NormalAttack_2;
-			Attack_Num++;
-			IsAttacking = true;
-			break;
+            // 如果這是最後一個攻擊動畫，重置 Attack_Num 並設定旋轉屬性
+            if (Attack_Num == NormalAttacks.Num())
+            {
+                GetCharacterMovement()->bOrientRotationToMovement = true;
+                GetCharacterMovement()->bUseControllerDesiredRotation = false;
+                Attack_Num = 0;
+            }
 
-		case 2:
-			PlayAnimMontage(NormalAttack_3, 1);
-			AM_Attack = NormalAttack_3;
-			Attack_Num++;
-			IsAttacking = true;
-			break;
-
-		case 3:
-			PlayAnimMontage(NormalAttack_4, 1);
-			GetCharacterMovement()->bOrientRotationToMovement = true;
-			GetCharacterMovement()->bUseControllerDesiredRotation = false;
-			AM_Attack = NormalAttack_4;
-			Attack_Num = 0;
-			IsAttacking = true;
-			break;
-
-		default:
-			Attack_Num = 0;
-			AM_Attack = nullptr;
-		}
-
-		GetWorldTimerManager().SetTimer(TH_EndAttack, this, &AFIMCharacter::EndNormalAttack, DelayAttackEnd, false);
-	}
-
+            // 設置攻擊結束計時器
+            GetWorldTimerManager().SetTimer(TH_EndAttack, this, &AFIMCharacter::EndNormalAttack, DelayAttackEnd, false);
+        }
+    }
 }
+
 
 void AFIMCharacter::EndNormalAttack()
 {
@@ -331,20 +353,19 @@ void AFIMCharacter::CombatStart(bool DoCombatMode, bool IsOrientRotationToMoveme
 		GetCharacterMovement()->MaxWalkSpeed = BlockSpeed;
 		PlayAnimMontage(Montage_Equip, 1, NAME_None);
 		GetWorld()->GetTimerManager().SetTimer(EquipTimeDelay, [&]()
-			{
-				Server_Equip("S_Equip_L", "S_Equip_R");
-			}, 0.2f, false);
+		{
+			Server_Equip("S_Equip_L", "S_Equip_R");
+		}, 0.2f, false);
 	}
 	else
 	{
 		GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 		PlayAnimMontage(Montage_Unequip, 1, NAME_None);
 		GetWorld()->GetTimerManager().SetTimer(EquipTimeDelay, [&]()
-			{
-				Server_Equip("S_Unequip_L", "S_Unequip_R");
-			}, 0.2f, false);
+		{
+			Server_Equip("S_Unequip_L", "S_Unequip_R");
+		}, 0.2f, false);
 	}
-
 }
 
 void AFIMCharacter::DisableRotationInWalking()
@@ -373,7 +394,6 @@ void AFIMCharacter::SprintStart()
 	{
 		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 	}
-
 }
 
 void AFIMCharacter::SprintEnd()
@@ -388,7 +408,6 @@ void AFIMCharacter::SprintEnd()
 	{
 		GetCharacterMovement()->MaxWalkSpeed = BlockSpeed;
 	}
-
 }
 
 int32 AFIMCharacter::InputValue()
@@ -508,7 +527,8 @@ void AFIMCharacter::InterToRotation(bool IsInter)
 {
 	if (IsInter == true)
 	{
-		SetActorRotation(FMath::RInterpTo(GetActorRotation(), LastRotation, GetWorld()->GetDeltaSeconds(), RotationSpeed));
+		SetActorRotation(FMath::RInterpTo(GetActorRotation(), LastRotation, GetWorld()->GetDeltaSeconds(),
+		                                  RotationSpeed));
 	}
 }
 
@@ -533,7 +553,14 @@ void AFIMCharacter::BlockingEnd()
 
 void AFIMCharacter::OnInvicinble_Implementation()
 {
+}
 
+void AFIMCharacter::PossessedEvent_Implementation()
+{
+	/*if (OnPossess == true)
+	{
+		ProcessPossess = true;
+	}*/
 }
 
 void AFIMCharacter::AutoDeterminTeamIDbyControllerType()
@@ -654,7 +681,8 @@ void AFIMCharacter::InitializeAttributes(TSubclassOf<UGameplayAbility> AbilityTo
 			AbilityLevel = AbilityLevelSetup;
 			AbilitySystemComp->GiveAbility(FGameplayAbilitySpec(AbilityToGet, AbilityLevel, 0));
 		}
-		AbilitySystemComp->InitAbilityActorInfo(this, this);//holds information about who we are acting on and who controls us.
+		AbilitySystemComp->InitAbilityActorInfo(this, this);
+		//holds information about who we are acting on and who controls us.
 	}
 }
 
@@ -663,54 +691,162 @@ class UAbilitySystemComponent* AFIMCharacter::GetAbilitySystemComponent() const
 	return AbilitySystemComp;
 }
 
-void AFIMCharacter::GetHealthValues(float& Health, float& MaxHealth)
+void AFIMCharacter::Getn_BASIC_HPValues(float& n_BASIC_HP, float& Maxn_BASIC_HP)
 {
-	Health = AttributeSettings->GetHealth();
-	MaxHealth = AttributeSettings->GetMaxHealth();
+	n_BASIC_HP = AttributeSettings->Getn_BASIC_HP();
+	Maxn_BASIC_HP = AttributeSettings->GetMaxn_BASIC_HP();
 }
 
-void AFIMCharacter::GethManaValues(float& Mana, float& MaxMana)
+void AFIMCharacter::Gethn_BASIC_MPValues(float& n_BASIC_MP, float& Maxn_BASIC_MP)
 {
-	Mana = AttributeSettings->GetMana();
-	MaxMana = AttributeSettings->GetMaxMana();
+	n_BASIC_MP = AttributeSettings->Getn_BASIC_MP();
+	Maxn_BASIC_MP = AttributeSettings->GetMaxn_BASIC_MP();
 }
 
-void AFIMCharacter::GetStaminaValues(float& Stamina, float& MaxStamina)
+void AFIMCharacter::Getn_BASIC_SPValues(float& n_BASIC_SP, float& Maxn_BASIC_SP)
 {
-	Stamina = AttributeSettings->GetStamina();
-	MaxStamina = AttributeSettings->GetMaxStamina();
+	n_BASIC_SP = AttributeSettings->Getn_BASIC_SP();
+	Maxn_BASIC_SP = AttributeSettings->GetMaxn_BASIC_SP();
 }
 
-void AFIMCharacter::GetAttackPowerValues(float& AttackPower, float& MaxAttackPower)
+void AFIMCharacter::Getn_BAISC_DPValues(float& n_BAISC_DP, float& Maxn_BAISC_DP)
 {
-	AttackPower = AttributeSettings->GetAttackPower();
-	AttackPower = AttributeSettings->GetMaxAttackPower();
+	n_BAISC_DP = AttributeSettings->Getn_BAISC_DP();
+	Maxn_BAISC_DP = AttributeSettings->GetMaxn_BAISC_DP();
 }
 
-void AFIMCharacter::OnHealthChangedNative(const FOnAttributeChangeData& Data)
+void AFIMCharacter::Getn_LVValues(float& n_LV, float& Maxn_LV)
 {
-	OnHealthChanged(Data.OldValue, Data.NewValue);
+	n_LV = AttributeSettings->Getn_LV();
+	Maxn_LV = AttributeSettings->GetMaxn_LV();
+}
+
+void AFIMCharacter::Getn_EXPValues(float& n_EXP, float& Maxn_EXP)
+{
+	n_EXP = AttributeSettings->Getn_EXP();
+	Maxn_EXP = AttributeSettings->GetMaxn_EXP();
+}
+
+void AFIMCharacter::Getn_BAISC_DATKValues(float& n_BAISC_DATK, float& Maxn_BAISC_DATK)
+{
+	n_BAISC_DATK = AttributeSettings->Getn_BAISC_DATK();
+	Maxn_BAISC_DATK = AttributeSettings->GetMaxn_BAISC_DATK();
+}
+
+void AFIMCharacter::Getn_BAISC_DDEFValues(float& n_BAISC_DDEF, float& Maxn_BAISC_DDEF)
+{
+	n_BAISC_DDEF = AttributeSettings->Getn_BAISC_DDEF();
+	Maxn_BAISC_DDEF = AttributeSettings->GetMaxn_BAISC_DDEF();
+}
+
+void AFIMCharacter::Getn_BAISC_MOVE_SPEEDValues(float& n_BAISC_MOVE_SPEED, float& Maxn_BAISC_MOVE_SPEED)
+{
+	n_BAISC_MOVE_SPEED = AttributeSettings->Getn_BAISC_MOVE_SPEED();
+	Maxn_BAISC_MOVE_SPEED = AttributeSettings->GetMaxn_BAISC_MOVE_SPEED();
+}
+
+void AFIMCharacter::Getn_BAISC_ATTACK_SPEEDValues(float& n_BAISC_ATTACK_SPEED, float& Maxn_BAISC_ATTACK_SPEED)
+{
+	n_BAISC_ATTACK_SPEED = AttributeSettings->Getn_BAISC_ATTACK_SPEED();
+	Maxn_BAISC_ATTACK_SPEED = AttributeSettings->GetMaxn_BAISC_ATTACK_SPEED();
+}
+
+void AFIMCharacter::Getn_CRIValues(float& n_CRI, float& Maxn_CRI)
+{
+	n_CRI = AttributeSettings->Getn_CRI();
+	Maxn_CRI = AttributeSettings->GetMaxn_CRI();
+}
+
+void AFIMCharacter::Getn_CRI_PROPORTIONValues(float& n_CRI_PROPORTION, float& Maxn_CRI_PROPORTION)
+{
+	n_CRI_PROPORTION = AttributeSettings->Getn_CRI_PROPORTION();
+	Maxn_CRI_PROPORTION = AttributeSettings->GetMaxn_CRI_PROPORTION();
+}
+
+void AFIMCharacter::DevourEvent_Implementation()
+{
+}
+
+void AFIMCharacter::Onn_BASIC_HPChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_BASIC_HPChanged(Data.OldValue, Data.NewValue);
 	if (Data.OldValue <= 0.0f && !bIsDead)
 	{
 		Dead();
 		bIsDead = true;
 		BP_Die();
 	}
+
+	if (Data.NewValue <= CurrentMaximonn_BASIC_HP * 0.5 && !IsDevour)
+	{
+		DevourEvent();
+		IsDevour = true;
+		CurrentMaximonn_BASIC_HP = Data.NewValue;
+	}
 }
 
-void AFIMCharacter::OnManaChangedNative(const FOnAttributeChangeData& Data)
+void AFIMCharacter::Devour_Implementation()
 {
-	OnManaChanged(Data.OldValue, Data.NewValue);
 }
 
-void AFIMCharacter::OnStaminaChangedNative(const FOnAttributeChangeData& Data)
+void AFIMCharacter::Onn_BASIC_MPChangedNative(const FOnAttributeChangeData& Data)
 {
-	OnStaminaChanged(Data.OldValue, Data.NewValue);
+	Onn_BASIC_MPChanged(Data.OldValue, Data.NewValue);
 }
 
-void AFIMCharacter::OnAttackPowerChangedNative(const FOnAttributeChangeData& Data)
+void AFIMCharacter::Onn_BASIC_SPChangedNative(const FOnAttributeChangeData& Data)
 {
-	OnAttackPowerChanged(Data.OldValue, Data.NewValue);
+	Onn_BASIC_SPChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::Onn_BAISC_DPChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_BAISC_DPChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::Onn_LVChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_LVChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::Onn_EXPChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_EXPChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::Onn_BAISC_DATKChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_BAISC_DATKChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::Onn_BAISC_DDEFChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_BAISC_DDEFChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::Onn_BAISC_MOVE_SPEEDChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_BAISC_MOVE_SPEEDChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::Onn_BAISC_ATTACK_SPEEDChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_BAISC_ATTACK_SPEEDChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::Onn_CRIChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_CRIChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::Onn_CRI_PROPORTIONChangedNative(const FOnAttributeChangeData& Data)
+{
+	Onn_CRI_PROPORTIONChanged(Data.OldValue, Data.NewValue);
+}
+
+void AFIMCharacter::BP_Die_Implementation()
+{
+	bIsDead = true;
 }
 
 void AFIMCharacter::StartReversingTime()
@@ -726,4 +862,3 @@ void AFIMCharacter::EndReversingTime()
 	IsReverseTime = false;
 	PlayMontageRate = 1.0f;
 }
-

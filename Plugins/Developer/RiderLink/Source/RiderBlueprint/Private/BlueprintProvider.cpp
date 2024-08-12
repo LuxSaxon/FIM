@@ -10,7 +10,7 @@
 #include "Runtime/Launch/Resources/Version.h"
 
 #if ENGINE_MAJOR_VERSION == 4 && ENGINE_MINOR_VERSION <= 23
-#include "Toolkits/AssetEditorManager.h"
+#include "Toolkits/AssetEditorn_BASIC_MPger.h"
 #endif
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "Model/RdEditorProtocol/RdEditorModel/RdEditorModel.Pregenerated.h"
@@ -40,12 +40,12 @@ bool BluePrintProvider::IsBlueprint(FString const& pathName) {
 }
 
 void BluePrintProvider::OpenBlueprint(JetBrains::EditorPlugin::BlueprintReference const& BlueprintReference, TSharedPtr<FMessageEndpoint, ESPMode::ThreadSafe> const& messageEndpoint) {
-    // Just to create asset manager if it wasn't created already
+    // Just to create asset n_BASIC_MPger if it wasn't created already
     const FString AssetPathName = BlueprintReference.get_pathName();
     FGuid AssetGuid;
     bool bIsValidGuid = FGuid::Parse(BlueprintReference.get_guid(), AssetGuid);
 #if ENGINE_MAJOR_VERSION == 4 && ENGINE_MINOR_VERSION <= 23
-    FAssetEditorManager::Get();
+    FAssetEditorn_BASIC_MPger::Get();
     messageEndpoint->Publish(new FAssetEditorRequestOpenAsset(AssetPathName), EMessageScope::Process);
 #else
     AsyncTask(ENamedThreads::GameThread, [AssetPathName, AssetGuid, bIsValidGuid]()

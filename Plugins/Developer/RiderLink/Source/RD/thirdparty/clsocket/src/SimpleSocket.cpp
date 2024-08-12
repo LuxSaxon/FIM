@@ -705,7 +705,7 @@ bool CSimpleSocket::SetOptionLinger(bool bEnable, uint16_t nTime)
 //------------------------------------------------------------------------------
 //
 // Receive() - Attempts to receive a block of data on an established
-//             connection.    Data is received in an internal buffer managed
+//             connection.    Data is received in an internal buffer n_BASIC_MPged
 //             by the class.  This buffer is only valid until the next call
 //             to Receive(), a call to Close(), or until the object goes out
 //             of scope.

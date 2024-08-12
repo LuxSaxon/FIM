@@ -326,13 +326,13 @@ FMT_CONSTEXPR inline fp operator*(fp x, fp y) {
 }
 
 // Returns a cached power of 10 `c_k = c_k.f * pow(2, c_k.e)` such that its
-// (binary) exponent satisfies `min_exponent <= c_k.e <= min_exponent + 28`.
-FMT_CONSTEXPR inline fp get_cached_power(int min_exponent,
+// (binary) exponent satisfies `min_EXPonent <= c_k.e <= min_EXPonent + 28`.
+FMT_CONSTEXPR inline fp get_cached_power(int min_EXPonent,
                                          int& pow10_exponent) {
   const int shift = 32;
   const auto significand = static_cast<int64_t>(log10_2_significand);
   int index = static_cast<int>(
-      ((min_exponent + fp::num_significand_bits - 1) * (significand >> shift) +
+      ((min_EXPonent + fp::num_significand_bits - 1) * (significand >> shift) +
        ((int64_t(1) << shift) - 1))  // ceil
       >> 32                          // arithmetic shift
   );
@@ -522,8 +522,8 @@ class bigint {
       return i >= n.exp_ && i < n.num_bigits() ? n[i - n.exp_] : 0;
     };
     double_bigit borrow = 0;
-    int min_exp = (std::min)((std::min)(lhs1.exp_, lhs2.exp_), rhs.exp_);
-    for (int i = num_rhs_bigits - 1; i >= min_exp; --i) {
+    int min_EXP = (std::min)((std::min)(lhs1.exp_, lhs2.exp_), rhs.exp_);
+    for (int i = num_rhs_bigits - 1; i >= min_EXP; --i) {
       double_bigit sum =
           static_cast<double_bigit>(get_bigit(lhs1, i)) + get_bigit(lhs2, i);
       bigit rhs_bigit = get_bigit(rhs, i);
@@ -2110,7 +2110,7 @@ template <typename T> decimal_fp<T> to_decimal(T x) FMT_NOEXCEPT {
   } else {
     // Subnormal case; the interval is always regular.
     if (significand == 0) return {0, 0};
-    exponent = float_info<T>::min_exponent - float_info<T>::significand_bits;
+    exponent = float_info<T>::min_EXPonent - float_info<T>::significand_bits;
   }
 
   const bool include_left_endpoint = (significand % 2 == 0);
@@ -2374,11 +2374,11 @@ FMT_HEADER_ONLY_CONSTEXPR20 int format_float(Float value, int precision,
   if (is_fast_float<Float>()) {
     // Use Grisu + Dragon4 for the given precision:
     // https://www.cs.tufts.edu/~nr/cs257/archive/florian-loitsch/printf.pdf.
-    const int min_exp = -60;  // alpha in Grisu.
+    const int min_EXP = -60;  // alpha in Grisu.
     int cached_exp10 = 0;     // K in Grisu.
     fp normalized = normalize(fp(value));
     const auto cached_pow = get_cached_power(
-        min_exp - (normalized.e + fp::num_significand_bits), cached_exp10);
+        min_EXP - (normalized.e + fp::num_significand_bits), cached_exp10);
     normalized = normalized * cached_pow;
     gen_digits_handler handler{buf.data(), 0, precision, -cached_exp10, fixed};
     if (grisu_gen_digits(normalized, 1, exp, handler) != digits::error &&

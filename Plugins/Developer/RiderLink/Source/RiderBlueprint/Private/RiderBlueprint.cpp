@@ -52,7 +52,7 @@ void FRiderBlueprintModule::StartupModule()
     const FAssetRegistryModule* AssetRegistryModule = &FModuleManager::LoadModuleChecked<FAssetRegistryModule>
         (AssetRegistryConstants::ModuleName);
 
-    MessageEndpoint = FMessageEndpoint::Builder(FName("FAssetEditorManager")).Build();
+    MessageEndpoint = FMessageEndpoint::Builder(FName("FAssetEditorn_BASIC_MPger")).Build();
 
     AssetRegistryModule->Get().OnAssetAdded().AddLambda([](const FAssetData& AssetData) {
         // TO-DO: Fix loading uasset's on 4.23-
