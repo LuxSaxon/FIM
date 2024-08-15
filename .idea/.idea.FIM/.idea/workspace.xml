@@ -15,30 +15,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FIM/.idea/shelf/Uncommitted_changes_before_Checkout_at_2024_8_13__01_22__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FIM/.idea/shelf/Uncommitted_changes_before_Checkout_at_2024_8_13__01_22__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FIM/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FIM/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FIM/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FIM/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Animations/Manny/ABP_AdvanceAIManny.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Animations/Manny/ABP_AdvanceAIManny.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/Abilities/GA_AI_Melee.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/Abilities/GA_AI_Melee.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/Abilities/GA_Melee.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/Abilities/GA_Melee.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/Abilities/GE_MeleeDamage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/Abilities/GE_MeleeDamage.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/Abilities/Skill/SpiralDash/GA_Spiral_Dash.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/Abilities/Skill/SpiralDash/GA_Spiral_Dash.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/AIC_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/AIC_Enemy.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTD_AttackRange.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTD_AttackRange.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTD_ChickDistance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTD_ChickDistance.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTD_RandomExecute.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTD_RandomExecute.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_Attack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_Attack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_Block.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_Block.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_DashAndBlock.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_DashAndBlock.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_FocusPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_FocusPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_Run.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_Run.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_StrafeMovement.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/AdvanceAI/BTTask_StrafeMovement.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_BaseClasses/BP_AdvanceA.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_BaseClasses/BP_AdvanceAI_Auto8.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_BaseClasses/BP_TestCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_BaseClasses/BP_TestCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_BaseClasses/GhostTail/BP_GhostCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_BaseClasses/GhostTail/BP_GhostCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_interface/BPI_OnDevour.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_interface/BPI_OnDevour.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_interface/BPI_Possessing.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/BP_interface/BPI_Possessing.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/UI/UMG_EnemyUI.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectFIM/Blueprints/UI/UMG_EnemyUI.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/FIM/Private/FIMCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/FIM/Private/FIMCharacter.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,29 +109,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ Project.FIM.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "20240813__Backup",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ Project.FIM.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;20240813__Backup&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\ASUS\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\ASUS\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\ASUS\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\ASUS\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\ASUS\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\ASUS\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ Project.FIM">
     <configuration name="FIM" type="CppProject" factoryName="C++ Project">
       <configuration_1>
