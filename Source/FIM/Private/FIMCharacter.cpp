@@ -146,7 +146,7 @@ AFIMCharacter::AFIMCharacter()
 void AFIMCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	Server_Equip("S_Unequip_L", "S_Unequip_R");
+	Server_Equip("S_Unequip_", "S_Unequip_R");
 
 	if (AbilitySystemComp)
 	{
@@ -354,7 +354,7 @@ void AFIMCharacter::CombatStart(bool DoCombatMode, bool IsOrientRotationToMoveme
 		PlayAnimMontage(Montage_Equip, 1, NAME_None);
 		GetWorld()->GetTimerManager().SetTimer(EquipTimeDelay, [&]()
 		{
-			Server_Equip("S_Equip_L", "S_Equip_R");
+			Server_Equip("S_Equip_", "S_Equip_R");
 		}, 0.2f, false);
 	}
 	else
